@@ -1,0 +1,245 @@
+#comment-container{
+    display:none;
+}
+
+#contentWrap{
+
+    display:none;
+
+    max-width: 600px;
+    margin: 30px auto;
+    border: 1px solid #ddd;
+    box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
+    border-radius: 2px;
+}
+
+#chatWrap{
+    height: 400px;
+    overflow: auto;
+    background: #f9f9f9;
+}
+
+#chat p{
+    float:left;
+    padding: 14px 0px;
+    margin: 0 20px;
+    border-bottom: 1px solid #e9e9e9;
+    color: #555;
+}
+
+body{
+    font-family: 'Nunito';
+}
+
+h2{
+    font-size: 18px;
+    padding: 10px 20px;
+    color: #575ed8;
+}
+
+#chat strong{
+    color: #575ed8;
+}
+
+label{
+    box-sizing: border-box;
+    display: block;
+    padding: 10px 20px;
+}
+
+input{
+    padding: 10px 20px;
+    box-sizing: border-box;
+    background: #eee;
+    border: 0;
+    display: block;
+    width: 100%;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    font-family: Nunito;
+    font-size: 16px;
+}
+
+button{
+    background: #575ed8;
+    color: #fff;
+    font-size: 18px;
+    border: 0;
+    padding: 12px 0;
+    width: 100%;
+    border-radius: 0 0 2px 2px;
+}
+
+.glyphicon-one-fine-red-dot:before {
+    content:"\25cf";
+    font-size: 1.5em;
+    color: red;
+}
+
+.glyphicon-one-fine-dot:before {
+    content: "\25cf";
+    font-size: 1.5em;
+    color:lawngreen;
+}
+
+.left-frame{
+    position:relative;
+}
+
+#herkes {
+    position:absolute;
+    bottom: 0;
+}
+
+#feedback p{
+    color: #aaa;
+    padding: 14px 0px;
+    margin: 0 20px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.warning {
+    background-color: orange;
+    color: #fff;
+    padding: 2em;
+}
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.commentbox-app {
+    font-family: 'Montserrat', sans-serif;
+    color: #4a4a4a;
+    font-size: 45px;
+}
+.commentbox-app .container {
+    max-width: 1120px;
+    margin: auto;
+    padding: 0 10px;
+}
+.commentbox-app .heading {
+    color: dodgerblue;
+    border-left: 3px solid dodgerblue;
+    line-height: 1;
+    padding-left: 12px;
+}
+.commentbox-app .comment-input,
+.commentbox-app .comment-btn {
+    float: left;
+    display: inline-block;
+    height: 70px;
+}
+.commentbox-app .comment-input {
+    appearance: none;
+    border: 0;
+    border-left: 3px solid transparent;
+    background-color: #EEE;
+    padding: 10px 10px 10px 32px;
+    transition: .65s ease;
+}
+.commentbox-app .comment-input:focus {
+    border-color: orange;
+    background-color: #fff;
+}
+.commentbox-app .comment-btn {
+    appearance: none;
+    background-color: #fff;
+    font-size: 30px;
+    text-decoration: none;
+    color: orange;
+    padding: 10px 32px;
+    line-height: 1.5;
+    transition: 0.65s ease;
+}
+.commentbox-app .comment-btn, .commentbox-app .comment-btn:focus, .commentbox-app .comment-btn:active {
+    border: 0;
+}
+.commentbox-app .comment-btn:hover {
+    background-color: orange;
+    color: #fff;
+}
+.commentbox-app .comment-btn:hover + .comment-input {
+    background-color: #fff;
+    border-color: orange;
+}
+.commentbox-app .remove-all-btn {
+    appearance: none;
+    border: 1px solid #ccc;
+    color: #222;
+    background-color: #eee;
+    padding: .3em .6em;
+    font-size: 40%;
+}
+.commentbox-app .comment-stream {
+    list-style: none;
+    padding: 0;
+    margin-top: 65px;
+}
+.commentbox-app .comment-stream .comment-remove {
+    display: none;
+    background-color: red;
+    color: #fff;
+    font-size: 20px;
+    text-decoration: none;
+    margin-left: 12px;
+    padding: 0 12px;
+    opacity: .75;
+    cursor: pointer;
+}
+.commentbox-app .comment-stream .comment-remove:hover {
+    opacity: 1;
+}
+.commentbox-app .comment-stream li {
+    font-size: 28px;
+    padding-left: 10px;
+    border-left: 3px solid #4a4a4a;
+    margin-bottom: 25px;
+}
+.commentbox-app .comment-stream li:hover .comment-remove {
+    display: inline-block;
+}
+
+
+.post-preview > a {
+    color: #212529;
+}
+
+.post-preview > a:focus, .post-preview > a:hover {
+    text-decoration: none;
+    color: #0085A1;
+}
+
+.post-preview > a > .post-title {
+    font-size: 30px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.post-preview > a > .post-subtitle {
+    font-weight: 300;
+    margin: 0 0 10px;
+}
+
+.post-preview > .post-meta {
+    font-size: 18px;
+    font-style: italic;
+    margin-top: 0;
+    color: #868e96;
+}
+
+.post-preview > .post-meta > a {
+    text-decoration: none;
+    color: #212529;
+}
+
+.post-preview > .post-meta > a:focus, .post-preview > .post-meta > a:hover {
+    text-decoration: underline;
+    color: #0085A1;
+}
+
