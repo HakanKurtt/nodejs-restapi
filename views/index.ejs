@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+
+    <link rel="stylesheet" href="/css/normalize.min.css">
+    <link href="./font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+    <link rel='stylesheet prefetch' href='/css/Montserrat.css'>
+
+    <script type="text/javascript" src="/js/popper-1.12.9.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap/bootstrap.min.js"></script>
+    <link href="./css/styles.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="container  bg-secondary rounded" style="min-height:100vh;max-height: 100vh;">
+        <nav class="navbar navbar-expand-lg navbar-dark rounded bg-dark">
+            <span class="navbar-brand">Fikrini Paylaş</span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExample07">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Disabled</a>
+                    </li>
+                </ul>
+                d
+                <form class="form-inline my-2 my-md-0">
+                    <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+                            <span class="input-group-append">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> </button>
+                            </span>
+                    </div>
+                </form>
+            </div>
+        </nav>
+        <div class="col">
+            <div class="row">
+
+        <div class="col-3">
+            <div class="card">
+            <img src="./images/Yumurta.jpg" class="rounded card-img-top" alt="">
+            <div class="card-body">
+            <h3>Username</h3>
+                <h5>Ad Soyad </h5>
+            </div>
+            </div>
+
+
+
+
+        </div>
+        <div class="col-9">
+            <div class="commentbox-app rounded bg-white">
+                    <h1 class="heading">commentbox</h1>
+                    <div class="clearfix">
+                        <form id="comment-form">
+                            <input type="text" id="comment-input" class="comment-input" id="comment-input" placeholder="Mesajını yaz" required>
+                            <input type="submit" value="Post" class="comment-btn" id="comment-btn">
+                        </form>
+                    </div>
+
+                    <ul id="comment-stream" class="comment-stream">
+                        <li>
+                            <div class="post-preview">
+                                <a href="#">
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                    <button class="remove-all-btn" id="remove-all" type="button">Remove all</button>
+            </div>
+    </div>
+</div>
+    </div>
+    </div>
+</body>
+<script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+
+<script src="./socket.io/socket.io.js"></script>
+<script src="./js/client.js"></script>
+
+
+</html>

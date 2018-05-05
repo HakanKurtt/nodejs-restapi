@@ -1,5 +1,4 @@
 #comment-container{
-    display:none;
 }
 
 #contentWrap{
@@ -116,9 +115,9 @@ button{
 .commentbox-app {
     font-family: 'Montserrat', sans-serif;
     color: #4a4a4a;
-    font-size: 45px;
+    font-size: 20px;
 }
-.commentbox-app .container {
+.commentbox-app {
     max-width: 1120px;
     margin: auto;
     padding: 0 10px;
@@ -174,7 +173,8 @@ button{
     color: #222;
     background-color: #eee;
     padding: .3em .6em;
-    font-size: 40%;
+    font-size: 90%;
+    min-height: 50px;
 }
 .commentbox-app .comment-stream {
     list-style: none;
