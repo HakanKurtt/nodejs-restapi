@@ -16,7 +16,7 @@
     <link href="./css/styles.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <div class="container  bg-secondary rounded" style="min-height:100vh;max-height: 100vh;">
+    <div class="container" >
         <nav class="navbar navbar-expand-lg navbar-dark rounded bg-dark">
             <span class="navbar-brand">Fikrini Paylaş</span>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,10 +35,9 @@
                         <a class="nav-link disabled" href="#">Disabled</a>
                     </li>
                 </ul>
-                d
-                <form class="form-inline my-2 my-md-0">
+                <form class="form-inline my-2 my-md-0" action="/users" method="post">
                     <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+                    <input class="form-control" id="search" type="text" placeholder="Search" name="search" aria-label="Search">
                             <span class="input-group-append">
                                 <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> </button>
                             </span>
@@ -47,20 +46,20 @@
             </div>
         </nav>
         <div class="col">
-            <div class="row">
+            <div class="row bg-secondary rounded" style="min-height:100vh;max-height: 100vh;">
 
         <div class="col-3">
             <div class="card">
             <img src="./images/Yumurta.jpg" class="rounded card-img-top" alt="">
             <div class="card-body">
             <h3>Username</h3>
-                <h5>Ad Soyad </h5>
+                <h5><%=data.nickname%> </h5>
+                <h5><%=data.name%> </h5>
+                <h5><%=data.surname%> </h5>
+                <h5><%=console.log(JSON.stringify(data))%> </h5>
+
             </div>
             </div>
-
-
-
-
         </div>
         <div class="col-9">
             <div class="commentbox-app rounded bg-white">
@@ -71,14 +70,11 @@
                             <input type="submit" value="Post" class="comment-btn" id="comment-btn">
                         </form>
                     </div>
-
-                    <ul id="comment-stream" class="comment-stream">
-                        <li>
-                            <div class="post-preview">
-                                <a href="#">
-                                </a>
-                            </div>
-                        </li>
+                    <ul id="Mesajlasma">
+                        <%try{ for(var i=messages.length-1; i>=0; i--){ %>
+                        <%console.log(messages[0].message)%>
+                        <li><div class="post-preview"><a href="#"><h3 class="post-subtitle"><%=messages[i].message%></h3></a><p class="post-meta">Posted by <a href="#"><%=messages[i].sender%></a> on <%=messages[i].created%></p></div></li>
+                        <%}}catch(e){console.log(e)}%>
                     </ul>
                     <button class="remove-all-btn" id="remove-all" type="button">Remove all</button>
             </div>
@@ -90,7 +86,7 @@
 <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
 
 <script src="./socket.io/socket.io.js"></script>
-<script src="./js/client.js"></script>
+<script src="./javascripts/client.js"></script>
 
 
 </html>

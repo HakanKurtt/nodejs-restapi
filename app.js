@@ -1,159 +1,128 @@
-var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var socket_io = require('socket.io');
-var debug = require('debug')('myapp:server');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var debug = require('debug')('noderestapi:server');
+var socket_io=require('socket.io');
 var http = require('http');
-
-
-var mongoose = require('mongoose');
-var db = require('./model/db');
-var User = require('./model/models').user;
-var Message = require('./model/models').message;
+var request = require('request');
+var cors = require('cors')
 
 var app = express();
-
-var io = socket_io();
-app.io = io;
-
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(cors());
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-
-io.on('connection', function(client){
-  console.log("Client connected..");
-  client.on('join', function(data){
-    console.log(data);
-  });
-
-  client.on('new user', function(data){
-    console.log("New user"+data.nickname);
-    User.findOne({'nickname': data.nickname}, function(err, result){
-      if(err){
-        throw err;
-      }
-
-      if(result){
-
-        User.findOneAndUpdate({nickname:data.nickname},{$set:{socketid:client.id}}, function(err, doc){
-          if(err) throw err;
-
-          console.log("Güncelleme basarılı");
-        });
-
-      }else{
-        var newUser = new User({nickname:data.nickname, socketid:client.id});
-
-        newUser.save(function(err){
-          if(err) throw err;
-          console.log("Kisi kaydedildi");
-        })
-      }
-    });
-  });
-
-  client.on('send message', function(data){
-        var newMsg = new Message({sender:data.nickname, message:data.message});
-        console.log("New message= "+data.message);
-
-        newMsg.save(function(err, docs){
-            if(err) throw err;
-            console.log(docs.sender);
-            io.emit('new message', {nickname:docs.sender, message:docs.message, created:docs.created});
-        })
-  });
-});
-
-
-app.get('/', function(req, res, next) {
-    res.render('login', { title: 'Express' });
-});
-app.post('/login', function(req, res, next) {
-    res.render("index");
-});
-app.get('/index', function(req, res, next) {
-    User.find({}, function(err, result){
-        if(err) throw err;
-
-        res.send(result);
-    });
-
-
-});
-
-/* Kullanıcıyı ada göre getir. */
-app.get('/:name', function(req, res, next){
-    User.findOne({nickname:req.params.name}, function(err, result){
-        if(err) throw err;
-
-        if(!result){
-            res.status(404).send('Boyle bir kullanici bulunmamaktadir.');
-        }else{
-            res.send(result);
-        }
-    });
-});
-
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-/**
- * Module dependencies.
- */
-
-
-
-/**
- * Get port from environment and store in Express.
- */
-
-var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
-
-/**
- * Create HTTP server.
- */
+app.use(express.static(__dirname + '/node_modules'));
 
 var server = http.createServer(app);
-
-var io = app.io;
-io.attach(server);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+var io =socket_io(server);
+var nickname ;
+var gdata;
+io.on('connection', function(client) {
+    console.log("Client connected..");
+    client.on('join', function (data) {
+        console.log(data);
+    });
+    io.emit('new user',nickname);
+    client.on('new user', function (data) {
+        console.log("New user" + data.nickname);
+    });
+    client.on('send message', function (data) {
+        console.log("New message= " + data.message);
+        request({url: "http://192.168.1.35:4000/messages/", method: 'POST', json: data},
+            function (err, response, body) {
+                if (err) console.log(err);
+                console.log(JSON.stringify(body)+"merhaba"+client.id);
+                    io.to(client.id).emit('new message', body);
+            });
 
-/**
- * Normalize a port into a number, string, or false.
- */
+    });
+});
+app.get('/', function(req, res, next) {
+    res.render('login');
+});
+app.get('/register',function (req,res,next) {
+    res.render('register');
+});
+app.get('/index', function(req, res, next) {
+    res.render("index",{data:gdata});
+
+});
+app.post('/users',function (req,res,next) {
+    console.log(req.body);
+    kullanicivarmi(req.body.search,function (callback) {
+        if(callback!="1"){
+            request('http://192.168.1.35:4000/messages/'+callback.nickname, function (error, response, body) {
+                let data = JSON.parse(body);
+                console.log(JSON.stringify(data));
+                console.log(JSON.stringify(callback)+"selamsana");
+                res.render("index",{data:callback,messages:data});
+            });
+        }
+    });
+});
+app.post('/login', function(req, res, next) {
+    console.log(req.body.token);
+    kullanicivarmi(req.body.token,function (callback) {
+        if(callback!="1"){
+            request('http://192.168.1.35:4000/messages/'+callback.nickname, function (error, response, body) {
+                let data = JSON.parse(body);
+                console.log(JSON.stringify(data));
+                console.log(JSON.stringify(callback)+"selamsana");
+                res.render("index",{data:callback,messages:data});
+            });
+        }
+        else
+            res.send('Böyle bir kullanıcı yok');
+    });
+        nickname=req.body.token;
+});
+app.post('/newregister',function (req,res,next) {
+            console.log(req.body);
+            request({ url: "http://192.168.1.35:4000/users/", method: 'POST', json: req.body},
+                function(err, response , body){
+                    console.log(body)
+                    res.render("index",{data:req.body});
+                });
+
+    });
+function kullanicivarmi(name,callback){
+    request('http://192.168.1.35:4000/users/'+name, function (error, response, body) {
+        var data = JSON.parse(body);
+        console.log(JSON.stringify(data));
+        callback(data);
+    });
+
+};
+
+app.use(function(req, res, next) {
+    next(createError(404));
+});
+app.use(function(err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
+});
 
 function normalizePort(val) {
     var port = parseInt(val, 10);
@@ -170,11 +139,6 @@ function normalizePort(val) {
 
     return false;
 }
-
-/**
- * Event listener for HTTP server "error" event.
- */
-
 function onError(error) {
     if (error.syscall !== 'listen') {
         throw error;
@@ -184,7 +148,6 @@ function onError(error) {
         ? 'Pipe ' + port
         : 'Port ' + port;
 
-    // handle specific listen errors with friendly messages
     switch (error.code) {
         case 'EACCES':
             console.error(bind + ' requires elevated privileges');
@@ -198,11 +161,6 @@ function onError(error) {
             throw error;
     }
 }
-
-/**
- * Event listener for HTTP server "listening" event.
- */
-
 function onListening() {
     var addr = server.address();
     var bind = typeof addr === 'string'
