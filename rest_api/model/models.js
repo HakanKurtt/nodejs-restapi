@@ -2,12 +2,15 @@ var mongoose = require("mongoose");
 
 var userSchema = mongoose.Schema({
     nickname: String,
-    socketid: String
+    name: String,
+    surname: String,
 });
 
 var messageSchema = mongoose.Schema({
     sender: String,
     message: String,
+    likesCount: {type:Number, default:0},
+    likes: [String],
     created: {type: Date, default: Date.now()}
 });
 
