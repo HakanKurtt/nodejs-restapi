@@ -45,7 +45,7 @@ io.on('connection', function(client) {
     });
     client.on('send message', function (data) {
         console.log("New message= " + data.message);
-        request({url: "http://192.168.1.35:4000/messages/", method: 'POST', json: data},
+        request({url: "http://localhost:4000/messages/", method: 'POST', json: data},
             function (err, response, body) {
                 if (err) console.log(err);
                 console.log(JSON.stringify(body)+"merhaba"+client.id);
@@ -68,7 +68,7 @@ app.post('/users',function (req,res,next) {
     console.log(req.body);
     kullanicivarmi(req.body.search,function (callback) {
         if(callback!="1"){
-            request('http://192.168.1.35:4000/messages/'+callback.nickname, function (error, response, body) {
+            request('http://localhost:4000/messages/'+callback.nickname, function (error, response, body) {
                 let data = JSON.parse(body);
                 console.log(JSON.stringify(data));
                 console.log(JSON.stringify(callback)+"selamsana");
@@ -81,7 +81,7 @@ app.post('/login', function(req, res, next) {
     console.log(req.body.token);
     kullanicivarmi(req.body.token,function (callback) {
         if(callback!="1"){
-            request('http://192.168.1.35:4000/messages/'+callback.nickname, function (error, response, body) {
+            request('http://localhost:4000/messages/'+callback.nickname, function (error, response, body) {
                 let data = JSON.parse(body);
                 console.log(JSON.stringify(data));
                 console.log(JSON.stringify(callback)+"selamsana");
@@ -95,7 +95,7 @@ app.post('/login', function(req, res, next) {
 });
 app.post('/newregister',function (req,res,next) {
             console.log(req.body);
-            request({ url: "http://192.168.1.35:4000/users/", method: 'POST', json: req.body},
+            request({ url: "http://localhost:4000/users/", method: 'POST', json: req.body},
                 function(err, response , body){
                     console.log(body)
                     res.render("index",{data:req.body});
@@ -103,7 +103,7 @@ app.post('/newregister',function (req,res,next) {
 
     });
 function kullanicivarmi(name,callback){
-    request('http://192.168.1.35:4000/users/'+name, function (error, response, body) {
+    request('http://localhost:4000/users/'+name, function (error, response, body) {
         var data = JSON.parse(body);
         console.log(JSON.stringify(data));
         callback(data);
