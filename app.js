@@ -97,7 +97,8 @@ app.post('/newregister',function (req,res,next) {
             console.log(req.body);
             request({ url: "http://localhost:4000/users/", method: 'POST', json: req.body},
                 function(err, response , body){
-                    console.log(body)
+                    console.log(body);
+                    nickname=req.body.nickname;
                     res.render("index",{data:req.body});
                 });
 

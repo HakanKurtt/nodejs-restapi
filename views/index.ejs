@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Fikrini Paylaş!</title>
     <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
 
@@ -28,12 +28,6 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
-                    </li>
                 </ul>
                 <form class="form-inline my-2 my-md-0" action="/users" method="post">
                     <div class="input-group">
@@ -52,8 +46,7 @@
             <div class="card">
             <img src="./images/Yumurta.jpg" class="rounded card-img-top" alt="">
             <div class="card-body">
-            <h3>Username</h3>
-                <h5><%=data.nickname%> </h5>
+                <h3><%=data.nickname%> </h3>
                 <h5><%=data.name%> </h5>
                 <h5><%=data.surname%> </h5>
                 <h5><%=console.log(JSON.stringify(data))%> </h5>
@@ -76,7 +69,6 @@
                         <li><div class="post-preview"><a href="#"><h3 class="post-subtitle"><%=messages[i].message%></h3></a><p class="post-meta">Posted by <a href="#"><%=messages[i].sender%></a> on <%=messages[i].created%></p></div></li>
                         <%}}catch(e){console.log(e)}%>
                     </ul>
-                    <button class="remove-all-btn" id="remove-all" type="button">Remove all</button>
             </div>
     </div>
 </div>
